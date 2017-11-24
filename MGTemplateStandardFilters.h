@@ -5,8 +5,9 @@
 //  Copyright 2008 Instinctive Code. All rights reserved.
 //
 
-#import "MGTemplateFilter.h"
+#import <Cocoa/Cocoa.h>
 
+#import "MGTemplateFilter.h"
 
 @interface MGTemplateStandardFilters : NSObject <MGTemplateFilter> {
 
