@@ -162,7 +162,8 @@
 				startIndex = 0;
 				
 				// Check that endArg is a collection.
-				NSObject *obj = [engine resolveVariable:endArg];
+                MGTemplateEngine *strongEngine = engine;
+				NSObject *obj = [strongEngine resolveVariable:endArg];
 				if (obj && [obj respondsToSelector:@selector(objectEnumerator)] && [obj respondsToSelector:@selector(count)]) {
 					endIndex = (NSInteger)[(NSArray *)obj count];
 					if (endIndex > 0) {
@@ -210,7 +211,8 @@
 				// Add parentLoop if it exists.
 				if (blockInfo) {
 					NSDictionary *parentLoop;
-					parentLoop = (NSDictionary *)[engine resolveVariable:FOR_LOOP_VARS]; // in case parent loop isn't in the first parent stack-frame.
+                    MGTemplateEngine *strongEngine = engine;
+					parentLoop = (NSDictionary *)[strongEngine resolveVariable:FOR_LOOP_VARS]; // in case parent loop isn't in the first parent stack-frame.
 					if (parentLoop) {
 						[loopVars setObject:parentLoop forKey:FOR_PARENT_LOOP];
 					}
@@ -352,11 +354,12 @@
 				BOOL firstNumeric, secondNumeric;
 				firstNumeric = [self argIsNumeric:firstArg integerValue:&num1 checkVariables:YES];
 				secondNumeric = [self argIsNumeric:secondArg integerValue:&num2 checkVariables:YES];
+                MGTemplateEngine *strongEngine = engine;
 				if (!firstNumeric) {
-					num1 = ([engine resolveVariable:firstArg]) ? 1 : 0;
+					num1 = ([strongEngine resolveVariable:firstArg]) ? 1 : 0;
 				}
 				if (!secondNumeric) {
-					num2 = ([engine resolveVariable:secondArg]) ? 1 : 0;
+					num2 = ([strongEngine resolveVariable:secondArg]) ? 1 : 0;
 				}
 				NSString *op = [[args objectAtIndex:1] lowercaseString];
 				
@@ -383,8 +386,8 @@
                         argTrue = ((num1 % num2) > 0);
                     }
 				} else if ([op isEqualToString:@"equalsstring"] || [op isEqualToString:@"notequalsstring"]) {
-					NSObject *firstVal = [engine resolveVariable:firstArg];
-					NSObject *secondVal = [engine resolveVariable:secondArg];
+					NSObject *firstVal = [strongEngine resolveVariable:firstArg];
+					NSObject *secondVal = [strongEngine resolveVariable:secondArg];
 					if (!firstVal) {
 						firstVal = firstArg;
 					}
@@ -399,8 +402,8 @@
 						}
 					}
                 } else if ([op isEqualToString:@"hasprefix"] || [op isEqualToString:@"nothasprefix"]) {
-                    NSObject *firstVal = [engine resolveVariable:firstArg];
-                    NSObject *secondVal = [engine resolveVariable:secondArg];
+                    NSObject *firstVal = [strongEngine resolveVariable:firstArg];
+                    NSObject *secondVal = [strongEngine resolveVariable:secondArg];
                     if (!firstVal) {
                         firstVal = firstArg;
                     }
@@ -518,14 +521,15 @@
 			for (NSString *className in args) {
 				Class class = NSClassFromString(className);
 				if (class && [(id)class isKindOfClass:[NSObject class]]) {
+                    MGTemplateEngine *strongEngine = engine;
 					if ([class conformsToProtocol:@protocol(MGTemplateFilter)]) {
 						// Instantiate and load filter.
 						NSObject <MGTemplateFilter> *obj = [[class alloc] init];
-						[engine loadFilter:obj];
+						[strongEngine loadFilter:obj];
 					} else if ([class conformsToProtocol:@protocol(MGTemplateMarker)]) {
 						// Instantiate and load marker.
-						NSObject <MGTemplateMarker> *obj = [[class alloc] initWithTemplateEngine:engine];
-						[engine loadMarker:obj];
+						NSObject <MGTemplateMarker> *obj = [[class alloc] initWithTemplateEngine:strongEngine];
+						[strongEngine loadMarker:obj];
 					}
 				}
 			}
