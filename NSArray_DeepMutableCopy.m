@@ -6,7 +6,7 @@
 //
 
 #import "NSArray_DeepMutableCopy.h"
-
+#import <Foundation/Foundation.h>
 
 @implementation NSArray (DeepMutableCopy)
 

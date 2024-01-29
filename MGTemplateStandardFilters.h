@@ -6,7 +6,7 @@
 //
 
 #import "MGTemplateFilter.h"
-
+#import <Foundation/Foundation.h>
 
 @interface MGTemplateStandardFilters : NSObject <MGTemplateFilter> {
 

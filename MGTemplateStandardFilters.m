@@ -6,7 +6,8 @@
 //
 
 #import "MGTemplateStandardFilters.h"
-
+#import <Foundation/Foundation.h>
+#import <AppKit/NSColor.h>
 
 #define UPPERCASE		@"uppercase"
 #define LOWERCASE		@"lowercase"
