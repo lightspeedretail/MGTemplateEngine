@@ -73,7 +73,7 @@
 
 @implementation MGTemplateStandardMarkers
 {
-	__weak MGTemplateEngine *engine; // weak ref
+	MGTemplateEngine *engine; // weak ref
 	NSMutableArray *forStack;
 	NSMutableArray *sectionStack;
 	NSMutableArray *ifStack;
