@@ -13,6 +13,7 @@
 #define BLOCK_VARIABLES_KEY				@"vars"				// NSDictionary of variables
 
 #define TEMPLATE_ENGINE_ERROR_DOMAIN	@"MGTemplateEngineErrorDomain"
+#import <Foundation/Foundation.h>
 
 @class MGTemplateEngine;
 @protocol MGTemplateEngineDelegate <NSObject>

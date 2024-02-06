@@ -6,7 +6,8 @@
 //
 
 #import "MGTemplateStandardFilters.h"
-
+#import <Foundation/Foundation.h>
+#import <AppKit/NSColor.h>
 
 #define UPPERCASE		@"uppercase"
 #define LOWERCASE		@"lowercase"
@@ -84,7 +85,7 @@
                                       (unsigned int)(components[2] * 255)];
                 return colorHex;
 #else
-				NSColor *color = [(NSColor *)value colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+				NSColor *color = [(NSColor *)value colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 				if (!color) { // happens if the colorspace couldn't be converted
 					return @"000000"; // black
 				} else {
